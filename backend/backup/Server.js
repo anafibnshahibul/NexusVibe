@@ -12,7 +12,7 @@ app.set('trust proxy', true);
 
 // File paths defined correctly at the top level
 const messagesPath = path.join(__dirname, 'messages.json');
-const analyticsPath = path.join(__dirname, 'analytics.json');
+const analyticsPath = path.join(__dirname, 'analytics.json'); // This was missing or misplaced!
 
 // --- Contact Form Route ---
 app.post('/api/contact', (req, res) => {
@@ -53,6 +53,12 @@ app.post('/api/analytics', (req, res) => {
         action: "Page Entry"
     };
 
+    app.use(cors({
+    origin: '*',
+    methods: ['GET', 'POST'],
+    allowedHeaders: ['Content-Type']
+    }));
+
     // Fix: Create the file if it doesn't exist
     if (!fs.existsSync(analyticsPath)) {
         fs.writeFileSync(analyticsPath, JSON.stringify([]));
@@ -71,26 +77,15 @@ app.post('/api/analytics', (req, res) => {
                 console.error("Error:", err);
                 return res.status(500).json({ success: false });
             }
+            // Now this will show in your terminal when someone visits
             console.log(`Tracked visit to: ${req.body.page}`);
             res.status(200).json({ success: true });
         });
     });
 });
 
-// --- Catch-all Route for all other requests ---
-// This will handle ANY link (e.g., localhost:5000/anything) that isn't defined above
-app.use((req, res) => {
-    res.status(403).send(`
-        <div style="font-family: sans-serif; text-align: center; margin-top: 50px;">
-            <h1>Access Restricted</h1>
-            <p>This is a dedicated <strong>HTTP API Server</strong> and does not support direct browser viewing.</p>
-            <p>Please use the appropriate client-side application or API tools to interact with this service.</p>
-        </div>
-    `);
-});
-
 const PORT = 5000;
 app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-    console.log(`Analytics will be saved to: ${analyticsPath}`);
+    console.log(`🚀 Server running on port ${PORT}`);
+    console.log(`📁 Analytics will be saved to: ${analyticsPath}`);
 });

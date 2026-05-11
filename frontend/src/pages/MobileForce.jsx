@@ -64,7 +64,7 @@ const MobileForce = () => {
               <p className="pl-4 text-blue-400 italic">return (</p>
               <p className="pl-8 text-white">{"<Container>"}</p>
               <p className="pl-12 text-green-400">{"<GestureHandler />"}</p>
-              <p className="pl-12 text-green-400">{"<Ap />"}</p>
+              <p className="pl-12 text-green-400">{"<App />"}</p>
               <p className="pl-12 text-green-400">{"<NativeEngine speed='max' />"}</p>
               <p className="pl-8 text-white">{"</Container>"}</p>
               <p className="pl-4 text-blue-400 italic">);</p>
@@ -110,11 +110,15 @@ const MobileForce = () => {
             <p className="text-blue-100 font-bold uppercase tracking-widest text-sm">Swift Excellence</p>
           </div>
           <div>
-            <h4 className="text-6xl font-black mb-2 tracking-tighter">Droid</h4>
+            <h4 className="text-6xl font-black mb-2 tracking-tighter">Android</h4>
             <p className="text-blue-100 font-bold uppercase tracking-widest text-sm">Kotlin Power</p>
           </div>
           <div>
             <h4 className="text-6xl font-black mb-2 tracking-tighter">React</h4>
+            <p className="text-blue-100 font-bold uppercase tracking-widest text-sm">Cross-Platform</p>
+          </div>
+          <div>
+          <h4 className="text-6xl font-black mb-2 tracking-tighter">Dart</h4>
             <p className="text-blue-100 font-bold uppercase tracking-widest text-sm">Cross-Platform</p>
           </div>
           <div className="flex items-center justify-center">

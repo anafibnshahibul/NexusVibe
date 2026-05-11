@@ -1,0 +1,79 @@
+[
+  {
+    "timestamp": "5/10/2026, 5:28:36 PM",
+    "ip": "::ffff:127.0.0.1",
+    "device": "curl/7.88.1",
+    "page": "/test-page",
+    "action": "Page Entry"
+  },
+  {
+    "timestamp": "5/10/2026, 5:33:04 PM",
+    "ip": "::ffff:127.0.0.1",
+    "device": "curl/7.88.1",
+    "page": "/test-page",
+    "action": "Page Entry"
+  },
+  {
+    "timestamp": "5/11/2026, 5:57:51 AM",
+    "ip": "::ffff:127.0.0.1",
+    "device": "curl/7.88.1",
+    "page": "/",
+    "action": "Page Entry"
+  },
+  {
+    "timestamp": "5/11/2026, 5:59:23 AM",
+    "ip": "::1",
+    "device": "Mozilla/5.0 (X11; CrOS x86_64 14541.0.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "page": "/services",
+    "action": "Page Entry"
+  },
+  {
+    "timestamp": "5/11/2026, 5:59:43 AM",
+    "ip": "::1",
+    "device": "Mozilla/5.0 (X11; CrOS x86_64 14541.0.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "page": "/services",
+    "action": "Page Entry"
+  },
+  {
+    "timestamp": "5/11/2026, 5:59:54 AM",
+    "ip": "::1",
+    "device": "Mozilla/5.0 (X11; CrOS x86_64 14541.0.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "page": "/services/mobile-force",
+    "action": "Page Entry"
+  },
+  {
+    "timestamp": "5/11/2026, 6:03:21 AM",
+    "ip": "::1",
+    "device": "Mozilla/5.0 (X11; CrOS x86_64 14541.0.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "page": "/services",
+    "action": "Page Entry"
+  },
+  {
+    "timestamp": "5/11/2026, 6:03:27 AM",
+    "ip": "::1",
+    "device": "Mozilla/5.0 (X11; CrOS x86_64 14541.0.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "page": "/services/neural-design",
+    "action": "Page Entry"
+  },
+  {
+    "timestamp": "5/11/2026, 6:03:40 AM",
+    "ip": "::1",
+    "device": "Mozilla/5.0 (X11; CrOS x86_64 14541.0.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "page": "/services",
+    "action": "Page Entry"
+  },
+  {
+    "timestamp": "5/11/2026, 6:03:42 AM",
+    "ip": "::1",
+    "device": "Mozilla/5.0 (X11; CrOS x86_64 14541.0.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "page": "/",
+    "action": "Page Entry"
+  },
+  {
+    "timestamp": "5/11/2026, 6:11:24 AM",
+    "ip": "::1",
+    "device": "Mozilla/5.0 (X11; CrOS x86_64 14541.0.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "page": "/about",
+    "action": "Page Entry"
+  }
+]

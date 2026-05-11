@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Zap, Shield, Globe, Palette, Monitor, PenTool, Layout, Rocket, Heart, Sparkles } from 'lucide-react';
+import { ArrowRight, Zap, Shield, Globe, Palette, Monitor, PenTool, Layout, Rocket, Heart, Sparkles, Mail } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const Home = () => {
@@ -20,7 +20,7 @@ const Home = () => {
 
   return (
     <div className="overflow-hidden bg-slate-950 text-white">
-      {/* 1. Hero Section - Animated Background */}
+      {/* Hero Section - Animated Background */}
       <section className="relative h-screen flex items-center justify-center bg-gradient-to-b from-slate-950 via-slate-900 to-blue-950">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-600/20 rounded-full blur-[120px] animate-pulse"></div>
         <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-600/20 rounded-full blur-[120px] animate-pulse delay-700"></div>
@@ -70,7 +70,7 @@ const Home = () => {
         </div>
       </section>
 
-      {/* 2. Feature Grid - Animated Cards */}
+      {/* Feature Grid - Animated Cards */}
       <section className="py-32 bg-slate-950 relative">
         <div className="max-w-7xl mx-auto px-6">
           <motion.div {...fadeInUp} className="text-center mb-20">
@@ -104,7 +104,7 @@ const Home = () => {
         </div>
       </section>
 
-      {/* 3. Detailed About Me Section */}
+      {/* Detailed About Me Section */}
       <section className="py-32 bg-slate-900/30 overflow-hidden">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid md:grid-cols-2 gap-20 items-center">
@@ -152,7 +152,7 @@ const Home = () => {
         </div>
       </section>
 
-      {/* 4. Portfolio Preview - Masonry Style */}
+      {/* Portfolio Preview - Masonry Style */}
       <section className="py-32 bg-slate-950">
         <div className="max-w-7xl mx-auto px-6 mb-16 flex flex-col md:flex-row justify-between items-end gap-4">
           <motion.div {...fadeInUp}>
@@ -186,32 +186,31 @@ const Home = () => {
         </div>
       </section>
 
-      {/* 5. Contact Section - High Impact */}
-      <section className="py-32 px-6">
-        <motion.div 
-          initial={{ opacity: 0, scale: 0.9 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          className="max-w-5xl mx-auto p-12 md:p-24 rounded-[4rem] bg-gradient-to-br from-blue-600 to-indigo-900 text-center relative overflow-hidden"
-        >
-          {/* Background decorations */}
-          <div className="absolute top-0 left-0 w-full h-full bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20"></div>
-          <div className="absolute -bottom-20 -right-20 w-80 h-80 bg-white/10 rounded-full blur-[80px]"></div>
-
-          <motion.div {...fadeInUp} className="relative z-10">
-            <h2 className="text-5xl md:text-7xl font-black mb-8 leading-none tracking-tighter">LET'S START <br /> SOMETHING GREAT</h2>
-            <p className="text-blue-100 text-xl mb-12 max-w-xl mx-auto font-medium">
-              Ready to turn your vision into a digital masterpiece? I'm available for new creative ventures.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-6 justify-center">
-              <Link to="/contact" className="px-12 py-5 bg-white text-blue-600 rounded-full font-black text-xl shadow-2xl hover:scale-105 transition-transform">
-                Get In Touch
+      {/* Contact Section - High Impact */}
+      <section className="max-w-7xl mx-auto px-6 py-32">
+        <div className="relative rounded-[4rem] overflow-hidden h-[600px] group">
+          {/* Background Image with Hover Effect */}
+          <img 
+            src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2000&auto=format&fit=crop" 
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-[3s]"
+            alt="Community"
+          />
+          {/* Content Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-blue-700/90 via-blue-900/40 to-transparent flex items-end p-12 md:p-24">
+            <div className="max-w-2xl">
+              <h2 className="text-5xl md:text-7xl font-black text-white mb-8 uppercase tracking-tighter leading-none italic">
+                Let's build the future together.
+              </h2>
+              {/* Navigation Link to Contact Page */}
+              <Link to="/contact">
+                <button className="flex items-center gap-3 bg-white text-black px-12 py-5 rounded-2xl font-black uppercase tracking-widest hover:bg-black hover:text-white transition-all shadow-2xl group">
+                  <Mail size={24} className="group-hover:rotate-12 transition-transform" />
+                  Contact Us
+                </button>
               </Link>
-              <div className="flex items-center justify-center gap-2 text-white/80">
-                <Heart className="fill-red-500 text-red-500" /> <span>Crafted with Passion</span>
-              </div>
             </div>
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
       </section>
     </div>
   );
