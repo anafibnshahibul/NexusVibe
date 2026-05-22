@@ -81,10 +81,13 @@ app.post('/api/analytics', (req, res) => {
 // This will handle ANY link (e.g., localhost:5000/anything) that isn't defined above
 app.use((req, res) => {
     res.status(403).send(`
+        <title>Access Restricted</title>
         <div style="font-family: sans-serif; text-align: center; margin-top: 50px;">
             <h1>Access Restricted</h1>
             <p>This is a dedicated <strong>HTTP API Server</strong> and does not support direct browser viewing.</p>
             <p>Please use the appropriate client-side application or API tools to interact with this service.</p>
+            <br />
+            <p><small>Made with Node v24</small></p>
         </div>
     `);
 });
