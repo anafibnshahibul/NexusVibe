@@ -1,6 +1,4 @@
-# Digital Canvas Studio
-
-## Crafting immersive digital experiences through innovative design and robust development.
+# NexusVibe
 
 ## Overview
 
@@ -57,7 +55,7 @@ Follow these instructions to set up and run the project locally.
 
 1.  **Clone the repository:**
     
-    git clone https://github.com/your-username/digital-canvas-studio.git
+    git clone https://github.com/anafibnshahibul/NexusVibe.git
     cd digital-canvas-studio
     
 
@@ -131,7 +129,7 @@ The backend exposes the following API endpoints:
 ## Project Structure
 
 
-.
+```
 ├── backend/                  # Node.js Express API server
 │   ├── analytics.json        # Stores user analytics data (created on first write if not exists)
 │   ├── messages.json         # Stores contact form submissions (created on first write if not exists)
@@ -158,7 +156,7 @@ The backend exposes the following API endpoints:
 │   └── vite.config.js        # Vite build configuration
 ├── LICENSE                   # Project license information
 └── README.md                 # This README file
-
+```
 
 ## Contributing
 
