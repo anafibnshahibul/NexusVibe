@@ -1,195 +1,177 @@
-# NexusVibe
+# Digital Canvas Studio
+
+## Crafting immersive digital experiences through innovative design and robust development.
+
 ## Overview
 
-This repository hosts a robust fullstack application, meticulously structured with a clear separation of concerns between its frontend and backend components. This architecture promotes scalability, maintainability, and facilitates independent development and deployment cycles for each part of the application.
+This project is a sophisticated full-stack application serving as a portfolio and service showcase for a digital design and development studio. It features a dynamic React frontend powered by Vite, offering a rich user interface, and a Node.js Express backend that handles contact inquiries and tracks user engagement.
 
-## Features
+### Key Features
 
-*   **Modular Architecture:** Distinct `frontend/` and `backend/` directories for clear separation.
-*   **Scalable Design:** Backend API can be independently scaled and consumed by various clients.
-*   **Modern Frontend:** Built with [Specify Frontend Framework, e.g., React, Vue, Angular] for a dynamic user experience.
-*   **Robust Backend:** Developed using [Specify Backend Framework/Language, e.g., Node.js (Express), Python (Django/Flask), Go] to provide a reliable API.
-*   **Environment Configuration:** Utilizes environment variables for secure and flexible configuration.
-*   **Comprehensive Documentation:** Aims to provide clear setup and usage instructions.
+*   **Dynamic Service Showcase:** Pages dedicated to various services like Neural Design, Core Dev, Mobile Force, with dynamic routing and interactive elements.
+*   **Interactive Portfolio/Gallery:** A visually appealing section to display creative works with smooth animations.
+*   **User Analytics Tracking:** Captures anonymized page visits and user interactions, storing them in `analytics.json` for insights into user engagement.
+*   **Contact Management System:** An API endpoint to receive and store user messages securely in `messages.json`.
+*   **Responsive & Animated UI:** Built with Tailwind CSS and Framer Motion for a smooth, modern, and engaging user experience across all devices.
+*   **Modular Architecture:** Well-organized frontend components and backend routes designed for maintainability, scalability, and ease of future expansion.
 
-## Prerequisites
+### Backend Details
 
-Before you begin, ensure you have the following installed on your system:
+The backend, built with Node.js and Express, acts as a dedicated API server. It efficiently manages incoming contact form submissions and aggregates anonymized user analytics data. Data is currently persisted in local JSON files (`messages.json` and `analytics.json`). While Mongoose is listed as a dependency, the current `Server.js` implementation utilizes direct file system operations for data storage.
 
+### Frontend Details
+
+The frontend leverages React with Vite for a fast and efficient development experience. It features client-side routing using `react-router-dom`, interactive UI elements with `framer-motion`, and integrates seamlessly with the backend APIs for contact submissions and analytics reporting.
+
+## Technologies Used
+
+### Frontend Stack
+*   **React:** A JavaScript library for building dynamic user interfaces.
+*   **Vite:** A fast build tool that significantly improves the frontend development experience.
+*   **Tailwind CSS:** A utility-first CSS framework for rapidly building custom designs.
+*   **Framer Motion:** A production-ready animation library for React to create smooth and interactive UI animations.
+*   **React Router DOM v6:** For declarative client-side routing and navigation within the application.
+*   **Lucide React:** A collection of beautiful, pixel-perfect SVG icons for React projects.
+*   **React Google reCAPTCHA:** (Integrated for potential spam protection on forms).
+
+### Backend Stack
+*   **Node.js:** A JavaScript runtime built on Chrome's V8 JavaScript engine.
+*   **Express.js:** A minimal and flexible Node.js web application framework providing robust features for API development.
+*   **CORS:** Middleware for enabling Cross-Origin Resource Sharing, allowing frontend and backend communication.
+*   **Dotenv:** For loading environment variables from a `.env` file, enhancing security and configuration flexibility.
+*   **Express Rate Limit:** Middleware to prevent brute-force attacks and mitigate denial-of-service (DoS) attacks by limiting repeated requests to public APIs.
+*   **Mongoose:** (Installed dependency, providing MongoDB object data modeling capabilities for future database integration).
+*   **File System (fs):** Node.js built-in module for local JSON file-based data storage (`messages.json`, `analytics.json`).
+
+## Getting Started
+
+Follow these instructions to set up and run the project locally.
+
+### Prerequisites
+
+*   **Node.js:** v18.x or higher (LTS recommended)
+*   **npm** or **yarn:** For package management (npm is used in `package.json` scripts).
 *   **Git:** For cloning the repository.
-    *   [Install Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
-*   **Node.js & npm (or Yarn):** For the frontend and potentially the backend (if Node.js-based).
-    *   [Install Node.js](https://nodejs.org/en/download/)
-*   **[Specific Backend Prerequisite, e.g., Python & pip, Go, Java JDK]:** If your backend uses a different language/runtime.
-    *   [Install Python](https://www.python.org/downloads/)
-    *   [Install Go](https://golang.org/doc/install)
 
-## Installation
+### Installation
 
-Follow these steps to get the development environment set up.
+1.  **Clone the repository:**
+    
+    git clone https://github.com/your-username/digital-canvas-studio.git
+    cd digital-canvas-studio
+    
 
-### 1. Clone the Repository
+2.  **Backend Setup:**
+    
+    cd backend
+    npm install
+    # If you need environment variables (e.g., for future MongoDB connection), create a .env file:
+    # touch .env
+    # Add your variables (e.g., PORT=5000, MONGO_URI=...)
+    cd ..
+    
 
-```bash
-git clone https://github.com/your-username/project-name.git
-cd project-name
-```
+3.  **Frontend Setup:**
+    
+    cd frontend
+    npm install
+    cd ..
+    
 
-### 2. Backend Setup
+### Running the Application
 
-Navigate to the `backend` directory and install its dependencies.
+1.  **Start the Backend Server:**
+    
+    cd backend
+    node Server.js
+    # The backend will typically run on http://localhost:5000
+    cd ..
+    
 
-```bash
-cd backend
-```
-
-**[Option A: Node.js Backend]**
-```bash
-npm install # or yarn install
-```
-
-**[Option B: Python Backend]**
-```bash
-pip install -r requirements.txt
-```
-
-**[Option C: Go Backend]**
-```bash
-go mod tidy
-```
-
-#### Environment Variables for Backend
-
-Create a `.env` file in the `backend/` directory based on the provided example. This file will contain sensitive information and configuration specific to your environment.
-
-```bash
-cp .env.example .env
-# Open .env and fill in your details
-```
-
-**Example `.env` content (adjust as per your backend needs):**
-```
-PORT=5000
-DATABASE_URL=postgres://user:password@host:port/database
-JWT_SECRET=your_jwt_secret_key
-# Add other environment variables as required
-```
-
-### 3. Frontend Setup
-
-Navigate to the `frontend` directory and install its dependencies.
-
-```bash
-cd ../frontend # Go back to root, then into frontend
-# OR if you are in the backend folder:
-# cd ../frontend 
-```
-
-```bash
-npm install # or yarn install
-```
-
-#### Environment Variables for Frontend
-
-Similar to the backend, the frontend might require environment variables, especially to point to the backend API. Create a `.env` file (e.g., `.env.local` for React, `.env` for Vue) in the `frontend/` directory.
-
-```bash
-cp .env.example .env.local # For React, or .env for Vue/others
-# Open .env.local and fill in your details
-```
-
-**Example `.env.local` content (adjust as per your frontend framework):**
-```
-REACT_APP_API_URL=http://localhost:5000/api # For React
-# VUE_APP_API_URL=http://localhost:5000/api # For Vue
-```
-Ensure the `REACT_APP_API_URL` (or equivalent) matches the port your backend is running on.
-
-## Usage
-
-Once both the frontend and backend are set up, you can start them independently.
-
-### 1. Start the Backend Server
-
-From the `backend/` directory:
-
-**[Option A: Node.js Backend]**
-```bash
-npm start # or node server.js (or equivalent)
-```
-
-**[Option B: Python Backend]**
-```bash
-python app.py # or flask run, python manage.py runserver
-```
-
-**[Option C: Go Backend]**
-```bash
-go run main.go # or go build and then ./your-app-name
-```
-
-The backend API should now be running, typically on `http://localhost:5000` (or the port specified in your `.env` file).
-
-### 2. Start the Frontend Development Server
-
-From the `frontend/` directory:
-
-```bash
-npm start # or yarn start
-```
-
-This will usually open your browser automatically to `http://localhost:3000` (or another default port specified by your frontend framework), where you can interact with the application.
-
-## Project Structure
-
-```
-.
-├── backend/                  # Contains all server-side code (API, database interactions, business logic)
-│   ├── src/                  # Source code for the backend
-│   ├── node_modules/         # (or venv/, vendor/) Backend dependencies
-│   ├── .env.example          # Example environment variables for backend
-│   ├── package.json          # (or requirements.txt, go.mod) Backend project configuration
-│   └── ...                   # Other backend specific files (e.g., Dockerfile, routes, models)
-├── frontend/                 # Contains all client-side code (UI, user interaction logic)
-│   ├── public/               # Static assets
-│   ├── src/                  # Source code for the frontend (components, pages, services)
-│   ├── node_modules/         # Frontend dependencies
-│   ├── .env.example          # Example environment variables for frontend
-│   ├── package.json          # Frontend project configuration
-│   └── ...                   # Other frontend specific files (e.g., index.html, routing config)
-├── LICENSE                   # Project license information
-├── README.md                 # This README file
-└── ...                       # Other root level configuration or documentation files
-```
+2.  **Start the Frontend Development Server:**
+    
+    cd frontend
+    npm run dev
+    # The frontend will typically open in your browser at http://localhost:5173 (Vite default)
+    cd ..
+    
+You should now be able to access the application in your web browser.
 
 ## API Endpoints
 
-[Option A: If you have API documentation generated (e.g., Swagger/OpenAPI)]
-Detailed API documentation can be found [here](link-to-api-docs) or by starting the backend and navigating to `/api-docs`.
+The backend exposes the following API endpoints:
 
-[Option B: If you want to list key endpoints]
-Here are some of the key API endpoints:
+### `POST /api/contact`
+*   **Description**: Submits a new contact message from the frontend. Stores the message content along with metadata like sender's IP address and user agent in `messages.json`.
+*   **Request Body**:
+    
+    {
+        "name": "string",
+        "email": "string",
+        "message": "string",
+        "recaptchaToken": "string"  // Optional, if reCAPTCHA is implemented on the client-side
+    }
+    
+*   **Response**:
+    *   `201 Created`: `{ "success": true }` on successful message storage.
+    *   `500 Internal Server Error`: `{ "success": false }` if an error occurs during file write.
 
-*   `GET /api/users` - Retrieve all users.
-*   `POST /api/users` - Create a new user.
-*   `GET /api/users/:id` - Retrieve a single user by ID.
-*   `PUT /api/users/:id` - Update a user by ID.
-*   `DELETE /api/users/:id` - Delete a user by ID.
-*   `POST /api/auth/register` - User registration.
-*   `POST /api/auth/login` - User login.
+### `POST /api/analytics`
+*   **Description**: Records user page visits and interactions. Stores a timestamp, user's IP, device information, and the visited page in `analytics.json`. This helps in understanding user flow and popular content.
+*   **Request Body**:
+    
+    {
+        "page": "string" // e.g., "/", "/services", "/gallery"
+    }
+    
+*   **Response**:
+    *   `200 OK`: `{ "success": true }` on successful analytics data logging.
+    *   `500 Internal Server Error`: `{ "success": false }` if an error occurs during file write.
 
-For more detailed information on request/response bodies and parameters, please refer to the backend source code in `backend/src/routes` (or similar).
+## Project Structure
+
+
+.
+├── backend/                  # Node.js Express API server
+│   ├── analytics.json        # Stores user analytics data (created on first write if not exists)
+│   ├── messages.json         # Stores contact form submissions (created on first write if not exists)
+│   ├── node_modules/         # Backend dependencies
+│   ├── package.json          # Backend project metadata and dependencies
+│   ├── package-lock.json     # Lock file for backend dependencies
+│   └── Server.js             # Main backend application file (API routes and server logic)
+├── frontend/                 # React Vite client application
+│   ├── public/               # Static assets (e.g., favicon.svg, icons.svg)
+│   ├── src/                  # Frontend source code
+│   │   ├── assets/           # Static assets (e.g., vite.svg)
+│   │   ├── components/       # Reusable React components (e.g., Header, Footer, ScrollToTop)
+│   │   ├── hooks/            # Custom React hooks (e.g., AnalyticsTracker, ServiceDetail)
+│   │   ├── pages/            # Application pages (e.g., Home, Services, Contact, Gallery, About)
+│   │   │   └── error/        # Error pages (e.g., NotFound.jsx)
+│   │   ├── App.jsx           # Main application component, sets up React Router
+│   │   ├── index.css         # Global CSS styles (Tailwind base styles)
+│   │   └── main.jsx          # Entry point for the React application
+│   ├── eslint.config.js      # ESLint configuration for code quality
+│   ├── package.json          # Frontend project metadata and dependencies
+│   ├── package-lock.json     # Lock file for frontend dependencies
+│   ├── postcss.config.js     # PostCSS configuration (used by Tailwind CSS)
+│   ├── tailwind.config.js    # Tailwind CSS custom configuration
+│   └── vite.config.js        # Vite build configuration
+├── LICENSE                   # Project license information
+└── README.md                 # This README file
+
 
 ## Contributing
 
-We welcome contributions to this project! If you have suggestions for improvements or want to report a bug, please follow these steps:
+We welcome contributions to enhance this project! Please follow these steps:
 
-1.  Fork the repository.
-2.  Create a new branch (`git checkout -b feature/your-feature-name` or `bugfix/your-bug-name`).
-3.  Make your changes and ensure they adhere to the project's coding standards.
-4.  Write clear, concise commit messages.
-5.  Push your branch to your fork.
-6.  Open a Pull Request to the `main` branch of this repository, describing your changes in detail.
+1.  **Fork the repository.**
+2.  **Create a new branch** for your feature or bug fix: `git checkout -b feature/your-feature-name`
+3.  **Make your changes.**
+4.  **Commit your changes** with a descriptive message: `git commit -m 'feat: Add new feature for X'`
+5.  **Push to the branch:** `git push origin feature/your-feature-name`
+6.  **Open a Pull Request** explaining your changes and their benefits.
+
+Please ensure your code adheres to the project's coding standards and includes appropriate tests if applicable.
 
 ## License
 
