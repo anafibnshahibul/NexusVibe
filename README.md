@@ -55,43 +55,54 @@ Follow these instructions to set up and run the project locally.
 
 1.  **Clone the repository:**
     
+    ```
     git clone https://github.com/anafibnshahibul/NexusVibe.git
-    cd digital-canvas-studio
+    cd NexusVibe
+    ```
     
 
 2.  **Backend Setup:**
     
+    ```
     cd backend
     npm install
-    # If you need environment variables (e.g., for future MongoDB connection), create a .env file:
-    # touch .env
-    # Add your variables (e.g., PORT=5000, MONGO_URI=...)
-    cd ..
+    ```
+    ### If you need environment variables (e.g., for future MongoDB connection), create a .env file:
+    ### touch .env
+    ### Add your variables (e.g., PORT=5000, MONGO_URI=...)
+    ```cd ..```
     
 
-3.  **Frontend Setup:**
+4.  **Frontend Setup:**
     
+    ```
     cd frontend
     npm install
     cd ..
+    ```
     
 
 ### Running the Application
 
 1.  **Start the Backend Server:**
     
+    ```
     cd backend
     node Server.js
-    # The backend will typically run on http://localhost:5000
-    cd ..
+    ```
+    ## The backend
+    ###will typically run on http://localhost:5000
+    ```cd ..```
     
 
-2.  **Start the Frontend Development Server:**
+3.  **Start the Frontend Development Server:**
     
-    cd frontend
+    ```cd frontend
     npm run dev
-    # The frontend will typically open in your browser at http://localhost:5173 (Vite default)
-    cd ..
+    ```
+    ## The frontend
+    ###will typically open in your browser at http://localhost:5173 (Vite default)
+    ```cd ..```
     
 You should now be able to access the application in your web browser.
 
@@ -103,12 +114,14 @@ The backend exposes the following API endpoints:
 *   **Description**: Submits a new contact message from the frontend. Stores the message content along with metadata like sender's IP address and user agent in `messages.json`.
 *   **Request Body**:
     
+    ```
     {
         "name": "string",
         "email": "string",
         "message": "string",
         "recaptchaToken": "string"  // Optional, if reCAPTCHA is implemented on the client-side
     }
+    ```
     
 *   **Response**:
     *   `201 Created`: `{ "success": true }` on successful message storage.
@@ -118,9 +131,11 @@ The backend exposes the following API endpoints:
 *   **Description**: Records user page visits and interactions. Stores a timestamp, user's IP, device information, and the visited page in `analytics.json`. This helps in understanding user flow and popular content.
 *   **Request Body**:
     
+    ```
     {
         "page": "string" // e.g., "/", "/services", "/gallery"
     }
+    ```
     
 *   **Response**:
     *   `200 OK`: `{ "success": true }` on successful analytics data logging.
