@@ -82,5 +82,19 @@
     "device": "Mozilla/5.0 (X11; CrOS x86_64 14541.0.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
     "page": "/about",
     "action": "Page Entry"
+  },
+  {
+    "timestamp": "9/1/2026, 11:11:12 PM",
+    "ip": "::1",
+    "device": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+    "page": "/",
+    "action": "Page Entry"
+  },
+  {
+    "timestamp": "9/1/2026, 11:12:00 PM",
+    "ip": "::1",
+    "device": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+    "page": "/contact",
+    "action": "Page Entry"
   }
 ]

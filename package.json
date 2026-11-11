@@ -1,0 +1,10 @@
+{
+  "name": "nexusvibe",
+  "private": true,
+  "version": "2.0.0",
+  "description": "NexusVibe - Vercel deployable (Vite frontend + serverless API)",
+  "engines": { "node": ">=18" },
+  "dependencies": {
+    "mongoose": "^8.9.0"
+  }
+}

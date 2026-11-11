@@ -1,0 +1,256 @@
+diff --git a/.env.example b/.env.example
+new file mode 100644
+index 0000000..dc3f745
+--- /dev/null
++++ b/.env.example
+@@ -0,0 +1,9 @@
++# Required: MongoDB Atlas connection string
++MONGO_URI=mongodb+srv://USER:PASSWORD@cluster0.xxxxx.mongodb.net/nexusvibe?retryWrites=true&w=majority
++
++# Optional: server-side reCAPTCHA secret (enables captcha check on /api/contact)
++RECAPTCHA_SECRET_KEY=
++
++# Frontend (Vite) - leave unset on Vercel so the app calls same-origin /api
++# VITE_API_URL=
++# VITE_RECAPTCHA_SITE_KEY=
+diff --git a/DEPLOY.md b/DEPLOY.md
+new file mode 100644
+index 0000000..4889fcd
+--- /dev/null
++++ b/DEPLOY.md
+@@ -0,0 +1,31 @@
++# Deploy NexusVibe on Vercel (single project)
++
++## 1. Add these files to your repo root
++Copy everything in this folder (api/, lib/, vercel.json, package.json, .env.example,
++.gitignore) into the ROOT of NexusVibe. Keep your existing frontend/ folder.
++Your old backend/ folder can stay for local use; Vercel ignores it.
++
++## 2. Fix hardcoded API URLs in the frontend
++    grep -rn "localhost:5000" frontend/src
++Replace each `http://localhost:5000/api/...` with `/api/...`
++(or use frontend-api-snippet.js). 
++
++For local dev with `npm run dev`, add to frontend/vite.config.js:
++    server: { proxy: { "/api": "http://localhost:5000" } }
++
++## 3. Create a free MongoDB Atlas database
++- mongodb.com/atlas -> free M0 cluster -> Database Access: create a user
++- Network Access: add 0.0.0.0/0 (Vercel IPs are dynamic)
++- Connect -> Drivers -> copy the connection string
++
++## 4. Push to GitHub, then on vercel.com
++- Add New -> Project -> import NexusVibe
++- Root Directory: ./  (repo root, NOT frontend)
++- Framework Preset: Other  (vercel.json handles the build)
++- Environment Variables: MONGO_URI, and optionally RECAPTCHA_SECRET_KEY,
++  VITE_RECAPTCHA_SITE_KEY
++- Deploy
++
++## 5. Test
++- https://YOUR-APP.vercel.app/api/health  -> {"ok":true}
++- Submit the contact form, then check Atlas -> Browse Collections -> messages
+diff --git a/api/analytics.js b/api/analytics.js
+new file mode 100644
+index 0000000..55fe495
+--- /dev/null
++++ b/api/analytics.js
+@@ -0,0 +1,26 @@
++const { connect } = require("../lib/db");
++const { Analytics } = require("../lib/models");
++
++module.exports = async (req, res) => {
++  if (req.method !== "POST") {
++    res.setHeader("Allow", "POST");
++    return res.status(405).json({ success: false, error: "Method not allowed" });
++  }
++
++  try {
++    const { page } = req.body || {};
++    if (!page) return res.status(400).json({ success: false });
++
++    await connect();
++    await Analytics.create({
++      page: String(page).slice(0, 500),
++      ip: (req.headers["x-forwarded-for"] || "").split(",")[0].trim(),
++      device: req.headers["user-agent"],
++    });
++
++    return res.status(200).json({ success: true });
++  } catch (err) {
++    console.error("analytics error:", err);
++    return res.status(500).json({ success: false });
++  }
++};
+diff --git a/api/contact.js b/api/contact.js
+new file mode 100644
+index 0000000..382d215
+--- /dev/null
++++ b/api/contact.js
+@@ -0,0 +1,55 @@
++const { connect } = require("../lib/db");
++const { Message } = require("../lib/models");
++
++const clientIp = (req) =>
++  (req.headers["x-forwarded-for"] || "").split(",")[0].trim() ||
++  req.socket?.remoteAddress ||
++  "unknown";
++
++module.exports = async (req, res) => {
++  if (req.method !== "POST") {
++    res.setHeader("Allow", "POST");
++    return res.status(405).json({ success: false, error: "Method not allowed" });
++  }
++
++  try {
++    const { name, email, message, recaptchaToken } = req.body || {};
++
++    if (!name || !email || !message || !/^\S+@\S+\.\S+$/.test(email)) {
++      return res.status(400).json({ success: false, error: "Invalid input" });
++    }
++
++    // Optional reCAPTCHA verification (only if secret is configured)
++    if (process.env.RECAPTCHA_SECRET_KEY) {
++      if (!recaptchaToken) {
++        return res.status(400).json({ success: false, error: "Captcha required" });
++      }
++      const r = await fetch("https://www.google.com/recaptcha/api/siteverify", {
++        method: "POST",
++        headers: { "Content-Type": "application/x-www-form-urlencoded" },
++        body: new URLSearchParams({
++          secret: process.env.RECAPTCHA_SECRET_KEY,
++          response: recaptchaToken,
++        }),
++      });
++      const data = await r.json();
++      if (!data.success) {
++        return res.status(400).json({ success: false, error: "Captcha failed" });
++      }
++    }
++
++    await connect();
++    await Message.create({
++      name: String(name).slice(0, 200),
++      email: String(email).slice(0, 320),
++      message: String(message).slice(0, 5000),
++      ip: clientIp(req),
++      userAgent: req.headers["user-agent"],
++    });
++
++    return res.status(201).json({ success: true });
++  } catch (err) {
++    console.error("contact error:", err);
++    return res.status(500).json({ success: false });
++  }
++};
+diff --git a/api/health.js b/api/health.js
+new file mode 100644
+index 0000000..e549c62
+--- /dev/null
++++ b/api/health.js
+@@ -0,0 +1 @@
++module.exports = (req, res) => res.status(200).json({ ok: true });
+diff --git a/frontend/src/api.js b/frontend/src/api.js
+new file mode 100644
+index 0000000..02d55ce
+--- /dev/null
++++ b/frontend/src/api.js
+@@ -0,0 +1,14 @@
++// Put this in frontend/src/api.js and use it instead of hardcoded localhost URLs.
++// On Vercel VITE_API_URL is unset, so requests go to the same domain (/api/...).
++export const API_BASE = import.meta.env.VITE_API_URL || "";
++
++export const postJSON = (path, body) =>
++  fetch(`${API_BASE}${path}`, {
++    method: "POST",
++    headers: { "Content-Type": "application/json" },
++    body: JSON.stringify(body),
++  });
++
++// Usage:
++//   postJSON("/api/contact", { name, email, message, recaptchaToken });
++//   postJSON("/api/analytics", { page: location.pathname });
+diff --git a/lib/db.js b/lib/db.js
+new file mode 100644
+index 0000000..bd1ccf2
+--- /dev/null
++++ b/lib/db.js
+@@ -0,0 +1,19 @@
++const mongoose = require("mongoose");
++
++// Cache the connection across warm serverless invocations
++let cached = global._mongoose;
++if (!cached) cached = global._mongoose = { conn: null, promise: null };
++
++async function connect() {
++  if (cached.conn) return cached.conn;
++  if (!process.env.MONGO_URI) throw new Error("MONGO_URI is not set");
++  if (!cached.promise) {
++    cached.promise = mongoose
++      .connect(process.env.MONGO_URI, { bufferCommands: false })
++      .then((m) => m);
++  }
++  cached.conn = await cached.promise;
++  return cached.conn;
++}
++
++module.exports = { connect };
+diff --git a/lib/models.js b/lib/models.js
+new file mode 100644
+index 0000000..41e8c9b
+--- /dev/null
++++ b/lib/models.js
+@@ -0,0 +1,23 @@
++const mongoose = require("mongoose");
++
++const messageSchema = new mongoose.Schema({
++  name: { type: String, required: true, maxlength: 200 },
++  email: { type: String, required: true, maxlength: 320 },
++  message: { type: String, required: true, maxlength: 5000 },
++  ip: String,
++  userAgent: String,
++  createdAt: { type: Date, default: Date.now },
++});
++
++const analyticsSchema = new mongoose.Schema({
++  page: { type: String, required: true, maxlength: 500 },
++  ip: String,
++  device: String,
++  createdAt: { type: Date, default: Date.now },
++});
++
++module.exports = {
++  Message: mongoose.models.Message || mongoose.model("Message", messageSchema),
++  Analytics:
++    mongoose.models.Analytics || mongoose.model("Analytics", analyticsSchema),
++};
+diff --git a/package.json b/package.json
+new file mode 100644
+index 0000000..70e5bf6
+--- /dev/null
++++ b/package.json
+@@ -0,0 +1,10 @@
++{
++  "name": "nexusvibe",
++  "private": true,
++  "version": "2.0.0",
++  "description": "NexusVibe - Vercel deployable (Vite frontend + serverless API)",
++  "engines": { "node": ">=18" },
++  "dependencies": {
++    "mongoose": "^8.9.0"
++  }
++}
+diff --git a/vercel.json b/vercel.json
+new file mode 100644
+index 0000000..a4dd7ef
+--- /dev/null
++++ b/vercel.json
+@@ -0,0 +1,8 @@
++{
++  "installCommand": "npm install && npm install --prefix frontend",
++  "buildCommand": "npm run build --prefix frontend",
++  "outputDirectory": "frontend/dist",
++  "rewrites": [
++    { "source": "/((?!api/).*)", "destination": "/index.html" }
++  ]
++}

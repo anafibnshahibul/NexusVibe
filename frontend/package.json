@@ -1,8 +1,23 @@
 {
-  "name": "frontend",
+  "name": "nexusvibe",
+  "version": "1.0.0",
   "private": true,
-  "version": "0.0.0",
+  "description": "This is a portfolio website template.",
+  "keywords": [
+    "App"
+  ],
+  "homepage": "https://github.com/anafibnshahiul/NexusVibe#readme",
+  "bugs": {
+    "url": "https://github.com/anafibnshahiul/NexusVibe/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anafibnshahiul/NexusVibe.git"
+  },
+  "license": "MIT",
+  "author": "Anaf Ibn Shahibul",
   "type": "module",
+  "main": "eslint.config.js",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
