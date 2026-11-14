@@ -2,9 +2,22 @@
   "name": "nexusvibe",
   "private": true,
   "version": "2.0.0",
-  "description": "NexusVibe - Vercel deployable (Vite frontend + serverless API)",
-  "engines": { "node": ">=18" },
+  "description": "NexusVibe creative studio portfolio — React, Vite, and TypeScript",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "dev": "concurrently -k -n API,WEB -c cyan,magenta \"node server/index.js\" \"npm run dev --prefix frontend -- --host 127.0.0.1\"",
+    "dev:api": "node server/index.js",
+    "build": "npm run build --prefix frontend",
+    "typecheck": "npm run typecheck --prefix frontend",
+    "lint": "npm run lint --prefix frontend",
+    "install:frontend": "npm install --prefix frontend"
+  },
   "dependencies": {
-    "mongoose": "^8.9.0"
+    "concurrently": "^10.0.7",
+    "dotenv": "^18.0.10",
+    "jsondb-lite-database": "^1.1.3",
+    "mongoose": "^8.24.9"
   }
 }

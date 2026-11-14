@@ -1,31 +1,19 @@
-# Deploy NexusVibe on Vercel (single project)
+# Deploy NexusVibe Studio
 
-## 1. Add these files to your repo root
-Copy everything in this folder (api/, lib/, vercel.json, package.json, .env.example,
-.gitignore) into the ROOT of NexusVibe. Keep your existing frontend/ folder.
-Your old backend/ folder can stay for local use; Vercel ignores it.
+1. Import the repository in Vercel. Use the repository root and the **Other** framework preset.
+2. Create a MongoDB Atlas cluster and restricted database user.
+3. Add `MONGODB_URI` in Vercel → Project Settings → Environment Variables for the environments you intend to deploy.
+4. Review Atlas Network Access and allow connections from your deployment environment using the narrowest practical policy.
+5. Deploy. Vercel serves the static Vite site and the API functions under `api/`.
 
-## 2. Fix hardcoded API URLs in the frontend
-    grep -rn "localhost:5000" frontend/src
-Replace each `http://localhost:5000/api/...` with `/api/...`
-(or use frontend-api-snippet.js). 
+## Local development and JsonDB fallback
 
-For local dev with `npm run dev`, add to frontend/vite.config.js:
-    server: { proxy: { "/api": "http://localhost:5000" } }
+Run `npm run dev` from the repository root. This starts Vite on port 5173 and the API on port 3001. With no `MONGODB_URI`, JsonDB Lite stores demo data in `data/`. The `data/` folder is ignored by Git.
 
-## 3. Create a free MongoDB Atlas database
-- mongodb.com/atlas -> free M0 cluster -> Database Access: create a user
-- Network Access: add 0.0.0.0/0 (Vercel IPs are dynamic)
-- Connect -> Drivers -> copy the connection string
+JsonDB data on Vercel is ephemeral and not shared reliably between function instances. Configure `MONGODB_URI` before using the inquiry form for real business leads.
 
-## 4. Push to GitHub, then on vercel.com
-- Add New -> Project -> import NexusVibe
-- Root Directory: ./  (repo root, NOT frontend)
-- Framework Preset: Other  (vercel.json handles the build)
-- Environment Variables: MONGO_URI, and optionally RECAPTCHA_SECRET_KEY,
-  VITE_RECAPTCHA_SITE_KEY
-- Deploy
+## Environment variables
 
-## 5. Test
-- https://YOUR-APP.vercel.app/api/health  -> {"ok":true}
-- Submit the contact form, then check Atlas -> Browse Collections -> messages
+- `MONGODB_URI` — MongoDB Atlas connection string; keep it private.
+- `JSONDB_DIR` — optional local JsonDB data directory (default `./data`).
+- `API_PORT` — optional local API port (default `3001`).
